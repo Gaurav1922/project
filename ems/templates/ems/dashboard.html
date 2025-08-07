@@ -1,0 +1,91 @@
+{% extends 'ems/base.html' %}
+
+{% block content %}
+
+        <h5>Welcome to the dashboard page, {{user}}! </h5>
+        <hr>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'create-record' %}">
+
+            Create a new record &nbsp; <i class="fa fa-user-plus" ></i>
+        </a>
+
+               
+        <hr>
+
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+
+                    <th scope="col"> Emp ID </th>
+                    <th scope="col"> Full name </th>
+                    <th scope="col"> Email </th>
+                    <th scope="col"> Department</th>
+                    <th scope="col"> Designation </th>
+                    <th scope="col"> Contact </th>
+                    <th scope="col"> Address </th>
+                
+
+                    <th scope="col"> View </th>
+                </tr>
+
+            </thead>
+            
+            <tbody>
+            {% if records %}
+
+                {% for record in records %}
+                <tr>
+                    <td> {{record.emp_id}}</td>
+                    <td> {{record.name}}</td>
+                    <td> {{record.email}}</td>
+                    <td> {{record.department}}</td>
+                    <td> {{record.designation}}</td>
+                    <td> {{record.contact}}</td>
+                    <td> {{record.address}}</td>
+                
+                    <td> <a class="btn btn-success btn-sm" href="{% url 'record' record.id %}"> <i class="fa fa-eye"></i> </a> </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+            {% endif %}
+
+
+            </tbody>
+
+        </table>
+
+        <br><br>
+        <!--
+        {{ records }}<br>
+
+        Has Previous: {{ records.has_previous }}<br>
+        Has Next : {{ records.has_next }}<br>
+        Current Page: {{ records.number }}<br>
+        Number of Pages: {{ records.paginator.num_pages }}<br>
+        <hr><br><br>
+        -->
+    <nav aria-label="...">
+        <ul class="pagination">
+            {% if records.has_previous %}
+                <li class="page-item"><a class"page-link" href="?page=1">&laquo First</a></li>
+
+                <li class="page-item"><a class="page-link" href="?page={{ records.previous_page_number }}">Previous</a></li>
+
+            {% endif %}
+
+                <li class="page-item "><a href="#" class="page-link">Page {{ records.number }} of {{ records.paginator.num_pages }}</a></li>
+
+            {% if records.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{records.next_page_number}}">Next</a></li>
+
+                <li class="page-item"><a class="page-link" href="?page={{records.paginator.num_pages}}">Last &raquo</a></li>
+
+            {% endif %}
+        </ul>
+    </nav>
+
+
+{% endblock %}

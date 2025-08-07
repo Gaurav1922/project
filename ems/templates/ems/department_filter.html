@@ -1,0 +1,20 @@
+{% extends 'ems/base.html' %}
+{% block content %}
+<h1> Employees in department: {{ department }}</h1>
+
+<form method="get" action="{% url 'department_filter'%}">
+    <input type="text" name="department" palceholder="Enter Department Name" required>
+    <button type="submit">Search</button>
+</form>
+
+<h2>Results:<h2>
+ <ul>
+    {% for record in employees %}
+        <li>{{ record.name }} - {{ record.department }}</li>
+    {% empty %}
+        <li>No Employees found in this department.</li>
+    {% endfor %}
+ </ul>
+
+
+{% endblock %}

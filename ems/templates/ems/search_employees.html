@@ -1,0 +1,54 @@
+{% extends "ems/base.html" %}
+
+{% block content %}
+
+
+  <div class ="text-center">
+    <h1>Search for Employee</h1>
+    <form method="get" action="{% url 'search_employees' %}">{{ form.as_p }}<button type="submit">Search</button>
+    </form>
+    {% if query %}
+      <h6>Searching for:<strong>{{ query }}</strong>
+      
+      </h6>
+      <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col"> Emp ID </th>
+            <th scope="col"> Full name </th>
+            <th scope="col"> Department </th>
+            <th scope="col"> Designation </th>
+            <th scope="col"> Address </th>
+
+            <th scope="col"> View </th>
+          </tr>
+	      </thead>
+        <tbody>
+          {% if results %}
+            <ul>
+              {% for record in results %}
+              <tr>
+                <li>
+                  <td> {{record.emp_id}}</td>
+                  <td> {{record.name}}</td>
+                  <td> {{record.department}}</td>
+                  <td> {{record.designation}}</td>
+                  <td> {{record.address}}</td>
+                  <td> <a class="btn btn-success btn-sm" href="{% url 'record' record.id %}"> <i class="fa fa-eye"></i> </a> </td>
+                </li>
+              </tr>
+              {% endfor %}
+            </ul>
+            <h2> Total Employee found in  {{ query }} is {{ count }} </h2>
+          {% else %}
+            <p>No results found for "{{ query }}".</p>
+          {% endif %}
+          
+        </tbody>
+      </table>
+
+    {% endif %}
+
+  </div>
+  
+{% endblock %}
